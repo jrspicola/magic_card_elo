@@ -4,7 +4,6 @@ from .models import CardSet, CardColor, CardType, Card, CardComparison, CardComp
 admin.site.register(CardSet)
 admin.site.register(CardColor)
 admin.site.register(CardType)
-admin.site.register(CardRanking)
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
@@ -18,3 +17,7 @@ class CardComparisonAdmin(admin.ModelAdmin):
 @admin.register(CardComparisonResult)
 class CardComparisonResultAdmin(admin.ModelAdmin):
 	list_display = ('id', 'winner', 'loser')
+
+@admin.register(CardRanking)
+class CardRankingAdmin(admin.ModelAdmin):
+	list_display = ('card', 'elo')

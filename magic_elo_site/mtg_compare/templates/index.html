@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Magic Card Comparer</h1>
+
+    <p>Welcome to the Magic Card Comparer. Compare two magic cards to simulate a battle between them. The winner's Elo score will increase while the losers will decrease.</p>
+
+<h2>Stats</h2>
+
+    <p>Magic Card Comparer has the following:</p>
+    <ul>
+        <li><strong>Number of Cards:</strong> {{ num_cards }}</li>
+        <li><strong>Number of Comparisons:</strong> {{ num_card_comparison_results }}</li>
+    </ul>
+    
+    <p><strong>The highest rated card is:</strong> {{ highest_rated_card_ranking }}</p>
+
+{% endblock %}

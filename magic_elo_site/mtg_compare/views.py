@@ -41,6 +41,8 @@ def index(request):
 
 class CardRankingListView(generic.ListView):
     model = CardRanking
+    paginate_by = 10
+    ordering = ['-elo']
 
 class CardRankingDetailView(generic.DetailView):
     model = CardRanking

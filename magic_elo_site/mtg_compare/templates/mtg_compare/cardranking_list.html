@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Card Rankings</h1>
+
+    {% if cardranking_list %}
+    <ul>
+
+        {% for cardranking in cardranking_list %}
+        <li>
+            <a href="{{ cardranking.get_absolute_url }}">{{ cardranking.card }}</a> ({{ cardranking.elo }})
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>There are no card rankings</p>
+    {% endif %}
+{% endblock %}

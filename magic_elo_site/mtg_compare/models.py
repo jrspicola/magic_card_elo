@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 ELO_DEFAULT = 1400
 
@@ -80,3 +81,13 @@ class CardRanking(models.Model):
 
     def __str__(self):
         return self.card.name
+
+    def get_absolute_url(self):
+        '''returns the url to access a particular card ranking information'''
+        return reverse('cardranking-detail', args=[str(self.id)])
+        #currently is the ID. Since the cardRanking's primary key is currently ID.
+        #If we change it to be reversed on the self.card.name, then we need to make the cardranking have
+        #   a primary key of its name, but the only object we have is the card itself.
+        #TODO: Either have the url accept the card object
+        #   or
+        #      Have the primary key be a card name

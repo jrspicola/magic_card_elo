@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Max
+from django.views import generic
 
 from .models import Card, CardRanking, CardType, CardColor, CardSet, CardRanking, CardComparison, CardComparisonResult
 
@@ -37,3 +38,9 @@ def index(request):
                  'right_card': right_card,
                  },
     )
+
+class CardRankingListView(generic.ListView):
+    model = CardRanking
+
+class CardRankingDetailView(generic.DetailView):
+    model = CardRanking

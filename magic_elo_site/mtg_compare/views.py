@@ -27,6 +27,11 @@ def index(request):
         left_card = None
         right_card = None
 
+    # number of visits to this view, as counted in the session variable
+    #TODO: Add for the number of card comparisons
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
 
     return render(
         request,
@@ -36,6 +41,7 @@ def index(request):
                  'highest_rated_card_ranking': highest_rated_card_ranking,
                  'left_card': left_card,
                  'right_card': right_card,
+                 'num_visits': num_visits,
                  },
     )
 

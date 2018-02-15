@@ -32,6 +32,8 @@ class Card(models.Model):
     cardColor = models.ManyToManyField(CardColor, help_text="Select a color for this card")
     cardSet = models.ManyToManyField(CardSet, help_text="Select a set this card is from")
 
+    #TODO: Add a 'get random card' method.
+    #TODO: Implement a custom manager for the random method
 
     def __str__(self):
         return self.name

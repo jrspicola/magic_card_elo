@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.db.models import Max
 from django.views import generic
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .models import Card, CardRanking, CardType, CardColor, CardSet, CardRanking, CardComparison, CardComparisonResult
+from .forms import CompareCardsForm
 
 def index(request):
     '''
@@ -43,6 +46,24 @@ def index(request):
                  'right_card': right_card,
                  'num_visits': num_visits,
                  },
+    )
+
+def CompareCards(request):
+    if request.method == 'POST':
+        form = CompareCardsForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['cards_to_compare'])
+            return HttpResponseRedirect(reverse('comparecards'))
+        else:
+            print(form.errors.as_text())
+
+    else:
+        form = CompareCardsForm()
+
+    return render(
+        request,
+        'mtg_compare/comparecard.html', 
+        {'form': form}
     )
 
 class CardRankingListView(generic.ListView):

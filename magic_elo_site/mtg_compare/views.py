@@ -31,10 +31,11 @@ def index(request):
         right_card = None
 
     # number of visits to this view, as counted in the session variable
-    #TODO: Add for the number of card comparisons
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
 
+    # number of compares, as counted in the session variable and incremented in the CompareCards view
+    num_compares = request.session.get('num_compares', 0)
 
     return render(
         request,
@@ -45,6 +46,7 @@ def index(request):
                  'left_card': left_card,
                  'right_card': right_card,
                  'num_visits': num_visits,
+                 'num_compares': num_compares,
                  },
     )
 
@@ -53,6 +55,7 @@ def CompareCards(request):
         form = CompareCardsForm(request.POST, post_flag=True)
         if form.is_valid():
             print(form.cleaned_data['cards_to_compare'])
+            request.session['num_compares'] = request.session.get('num_compares', 0) + 1
             return HttpResponseRedirect(reverse('comparecards'))
         else:
             print(form.errors.as_text())

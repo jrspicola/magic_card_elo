@@ -42,4 +42,4 @@ class CompareCardsForm(forms.Form):
             self.fields['cards_to_compare'] = forms.ChoiceField(choices=card_choice, widget=forms.RadioSelect())
         
         else:
-            self.fields['cards_to_compare'] = forms.ChoiceField(choices=self.get_new_comparison(), widget=forms.RadioSelect())
+            self.fields['cards_to_compare'] = forms.ChoiceField(choices=get_new_comparison(), widget=forms.RadioSelect())

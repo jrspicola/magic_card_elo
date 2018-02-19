@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Card Ranking for: {{ cardranking.card.name }}</h1>
 
-    <p><strong>Card:</strong> <a href="">{{ cardranking.card }}</a></p>
+    <p><strong>Card:</strong> <a href="{{ cardranking.card.get_absolute_url }}">{{ cardranking.card }}</a></p>
     <p><strong>Elo:</strong> {{ cardranking.elo }}</p>
 
     {% load static %}

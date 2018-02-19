@@ -23,8 +23,8 @@
             {% block sidebar %}
             <ul class="sidebar-nav">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="">Compare Cards</a></li>
-                <li><a href="">All Cards</a></li>
+                <li><a href="{% url 'comparecards' %}">Compare Cards</a></li>
+                <li><a href="{% url 'allcards' %}">All Cards</a></li>
                 <li><a href="{% url 'cardrankings' %}">Rankings</a></li>
             </ul>
             {% endblock %}

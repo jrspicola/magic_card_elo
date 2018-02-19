@@ -73,3 +73,11 @@ class CardRankingListView(generic.ListView):
 
 class CardRankingDetailView(generic.DetailView):
     model = CardRanking
+
+class CardListView(generic.ListView):
+    model = Card
+    paginate_by = 20
+    ordering = ['name']
+
+class CardDetailView(generic.DetailView):
+    model = Card

@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Card details for: {{ card.name }}</h1>
+
+    <p><strong>Name:</strong> {{ card.name }}</p>
+    <p><strong>CMC:</strong> {{ card.cmc }}</p>
+    <p><strong>Type{% if card.cardType.all|length > 1 %}s{% endif %}:</strong> 
+        {% for type in card.cardType.all %}
+            {{ type }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p><strong>Color{% if card.cardColor.all|length > 1 %}s{% endif %}:</strong> 
+        {% for type in card.cardColor.all %}
+            {{ type }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p><strong>Set{% if card.cardSet.all|length > 1 %}s{% endif %}:</strong>  
+        {% for type in card.cardSet.all %}
+            {{ type }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    {% load static %}
+    <img src="{% static 'mtg_compare/images/' %}{{ card.name }}.jpg" alt="{{ card.name }}" style="width:555px;height:540px;"/>
+{% endblock %}

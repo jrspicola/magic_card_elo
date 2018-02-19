@@ -13,8 +13,8 @@ def get_new_comparison():
 
             left_card = Card.objects.all()[random_index]
             right_card = Card.objects.all()[random_index2]
-            left_card_choice = (left_card.name, left_card)
-            right_card_choice = (right_card.name, right_card)
+            left_card_choice = (left_card, left_card.name)
+            right_card_choice = (right_card, right_card.name)
         else:
             left_card = None
             right_card = None
@@ -29,5 +29,17 @@ class CompareCardsForm(forms.Form):
         return get_new_comparison()
 
     def __init__(self, *args, **kwargs):
+        post_flag = False
+        if kwargs.get('post_flag'):
+            post_flag = kwargs.pop('post_flag')
+
         super(CompareCardsForm, self).__init__(*args, **kwargs)
-        self.fields['cards_to_compare'] = forms.ChoiceField(choices=get_new_comparison(), widget=forms.RadioSelect())
+
+        if post_flag and len(args) > 0:
+            card_name = args[0].get('cards_to_compare')
+            card_obj = Card.objects.get(name=card_name)
+            card_choice = [(card_obj,card_name)]
+            self.fields['cards_to_compare'] = forms.ChoiceField(choices=card_choice, widget=forms.RadioSelect())
+        
+        else:
+            self.fields['cards_to_compare'] = forms.ChoiceField(choices=self.get_new_comparison(), widget=forms.RadioSelect())

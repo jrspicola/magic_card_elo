@@ -50,7 +50,7 @@ def index(request):
 
 def CompareCards(request):
     if request.method == 'POST':
-        form = CompareCardsForm(request.POST)
+        form = CompareCardsForm(request.POST, post_flag=True)
         if form.is_valid():
             print(form.cleaned_data['cards_to_compare'])
             return HttpResponseRedirect(reverse('comparecards'))

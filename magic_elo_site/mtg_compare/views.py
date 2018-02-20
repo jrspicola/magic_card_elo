@@ -4,6 +4,8 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+import ast
+
 from .models import Card, CardRanking, CardType, CardColor, CardSet, CardRanking, CardComparison, CardComparisonResult
 from .forms import CompareCardsForm
 
@@ -55,6 +57,8 @@ def CompareCards(request):
         form = CompareCardsForm(request.POST, post_flag=True)
         if form.is_valid():
             print(form.cleaned_data['cards_to_compare'])
+            print(form.get_other_card(form.cleaned_data['cards_to_compare']))
+
             request.session['num_compares'] = request.session.get('num_compares', 0) + 1
             return HttpResponseRedirect(reverse('comparecards'))
         else:

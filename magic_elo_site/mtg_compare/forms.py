@@ -1,6 +1,7 @@
 from django import forms
 from random import randint
 from .models import Card, CardComparison, CardComparisonResult
+import ast
 
 def get_new_comparison():
         num_cards = Card.objects.all().count()
@@ -13,8 +14,8 @@ def get_new_comparison():
 
             left_card = Card.objects.all()[random_index]
             right_card = Card.objects.all()[random_index2]
-            left_card_choice = (left_card, left_card.name)
-            right_card_choice = (right_card, right_card.name)
+            left_card_choice = (left_card.name, left_card.name)
+            right_card_choice = (right_card.name, right_card.name)
         else:
             left_card = None
             right_card = None
@@ -28,6 +29,18 @@ class CompareCardsForm(forms.Form):
     def get_fresh_comparison():
         return get_new_comparison()
 
+    def get_left_card_name(self):
+        return self.card_list[0][0]
+
+    def get_right_card_name(self):
+        return self.card_list[1][0]
+
+    def get_other_card(self, name):
+        if self.get_left_card_name() == name:
+            return self.get_right_card_name()
+        else:
+            return self.get_left_card_name()
+
     def __init__(self, *args, **kwargs):
         post_flag = False
         if kwargs.get('post_flag'):
@@ -36,10 +49,9 @@ class CompareCardsForm(forms.Form):
         super(CompareCardsForm, self).__init__(*args, **kwargs)
 
         if post_flag and len(args) > 0:
-            card_name = args[0].get('cards_to_compare')
-            card_obj = Card.objects.get(name=card_name)
-            card_choice = [(card_obj,card_name)]
-            self.fields['cards_to_compare'] = forms.ChoiceField(choices=card_choice, widget=forms.RadioSelect())
+            self.card_list = ast.literal_eval(args[0].get('card_list')) #get the choices from the POST message
+            self.fields['cards_to_compare'] = forms.ChoiceField(choices=self.card_list, widget=forms.RadioSelect())
         
         else:
-            self.fields['cards_to_compare'] = forms.ChoiceField(choices=get_new_comparison(), widget=forms.RadioSelect())
+            self.card_list = get_new_comparison()
+            self.fields['cards_to_compare'] = forms.ChoiceField(choices=self.card_list, widget=forms.RadioSelect())

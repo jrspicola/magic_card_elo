@@ -56,8 +56,22 @@ def CompareCards(request):
     if request.method == 'POST':
         form = CompareCardsForm(request.POST, post_flag=True)
         if form.is_valid():
-            print(form.cleaned_data['cards_to_compare'])
-            print(form.get_other_card(form.cleaned_data['cards_to_compare']))
+            winning_card_name = form.cleaned_data['cards_to_compare']
+            losing_card_name = form.get_other_card(winning_card_name)
+            winning_card = Card.objects.get(name=winning_card_name)
+            losing_card = Card.objects.get(name=losing_card_name)
+
+            comp = CardComparison.objects.create(leftCard=winning_card, rightCard=losing_card)
+            result = CardComparisonResult.objects.create(comparison=comp, winner=winning_card, loser=losing_card)
+
+            #TODO: Do this in the model itself using a method
+            win_ranking = CardRanking.objects.get(card=winning_card)
+            win_ranking.elo = win_ranking.elo + 25
+            win_ranking.save()
+
+            loser_ranking = CardRanking.objects.get(card=losing_card)
+            loser_ranking.elo = loser_ranking.elo - 25
+            loser_ranking.save()
 
             request.session['num_compares'] = request.session.get('num_compares', 0) + 1
             return HttpResponseRedirect(reverse('comparecards'))

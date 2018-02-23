@@ -93,3 +93,36 @@ class CardRanking(models.Model):
         #TODO: Either have the url accept the card object
         #   or
         #      Have the primary key be a card name
+
+
+    @staticmethod
+    def calculate_elo_ranking(winner_score, loser_score):
+        k = 32
+
+        R1 = 10 ** (winner_score / 400)
+        R2 = 10 ** (loser_score / 400)
+
+        E1 = R1 / (R1 + R2)
+        E2 = R2 / (R1 + R2)
+
+        return (winner_score + k * (1 - E1), loser_score + k * (0 - E2))
+
+    @staticmethod
+    def adjust_elo_from_rankings(winner, loser):
+        score_tuple = CardRanking.calculate_elo_ranking(winner.elo, loser.elo)
+        winner.elo = score_tuple[0]
+        loser.elo = score_tuple[1]
+        winner.save()
+        loser.save()
+
+    @staticmethod
+    def adjust_elo_from_cards(winner, loser):
+        winner_ranking = CardRanking.objects.get(card=winner)
+        loser_ranking = CardRanking.objects.get(card=loser)
+
+        score_tuple = CardRanking.calculate_elo_ranking(winner_ranking.elo, loser_ranking.elo)
+        winner_ranking.elo = score_tuple[0]
+        loser_ranking.elo = score_tuple[1]
+
+        winner_ranking.save()
+        loser_ranking.save()

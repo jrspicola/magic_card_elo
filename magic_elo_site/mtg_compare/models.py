@@ -94,10 +94,19 @@ class CardRanking(models.Model):
         #   or
         #      Have the primary key be a card name
 
+    @staticmethod
+    def get_k_value(score):
+        if score > 2400:
+            return 16
+        elif score >= 2100:
+            return 24
+        else:
+            return 32 
 
     @staticmethod
     def calculate_elo_ranking(winner_score, loser_score):
-        k = 32
+        K1 = CardRanking.get_k_value(winner_score)
+        K2 = CardRanking.get_k_value(loser_score)
 
         R1 = 10 ** (winner_score / 400)
         R2 = 10 ** (loser_score / 400)
@@ -105,7 +114,7 @@ class CardRanking(models.Model):
         E1 = R1 / (R1 + R2)
         E2 = R2 / (R1 + R2)
 
-        return (winner_score + k * (1 - E1), loser_score + k * (0 - E2))
+        return (winner_score + K1 * (1 - E1), loser_score + K2 * (0 - E2))
 
     @staticmethod
     def adjust_elo_from_rankings(winner, loser):

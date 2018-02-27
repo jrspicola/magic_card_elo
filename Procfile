@@ -1,0 +1,1 @@
+web: gunicorn magic_elo_site.wsgi --log-file -

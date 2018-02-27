@@ -1,1 +1,1 @@
-web: gunicorn magic_elo_site.wsgi --log-file -
+web: gunicorn mtg_compare.wsgi --log-file -

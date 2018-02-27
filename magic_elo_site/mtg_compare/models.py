@@ -78,7 +78,7 @@ class CardRanking(models.Model):
     '''
     Model representing an Elo ranking for a specific card
     '''
-    card = models.OneToOneField(Card, on_delete=models.CASCADE)
+    card = models.OneToOneField(Card, on_delete=models.CASCADE, primary_key=True)
     elo = models.IntegerField(default=ELO_DEFAULT, help_text="Enter the starting Elo for this card")
 
     def __str__(self):
@@ -86,7 +86,7 @@ class CardRanking(models.Model):
 
     def get_absolute_url(self):
         '''returns the url to access a particular card ranking information'''
-        return reverse('cardranking-detail', args=[str(self.id)])
+        return reverse('cardranking-detail', args=[self.pk])
         #currently is the ID. Since the cardRanking's primary key is currently ID.
         #If we change it to be reversed on the self.card.name, then we need to make the cardranking have
         #   a primary key of its name, but the only object we have is the card itself.

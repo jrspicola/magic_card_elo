@@ -1,1 +1,1 @@
-web: gunicorn magic_elo_site/magic_elo_site.wsgi --log-file -
+web: gunicorn magic_elo_site.wsgi --log-file -

@@ -131,6 +131,12 @@ STATIC_URL = '/static/'
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+# Uploaded image files (Card images, etc.)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mtg_compare/images')
+MEDIA_URL = '/mtg_compare/images/'
+
+
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)

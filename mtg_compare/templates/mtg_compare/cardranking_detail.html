@@ -6,6 +6,5 @@
     <p><strong>Card:</strong> <a href="{{ cardranking.card.get_absolute_url }}">{{ cardranking.card }}</a></p>
     <p><strong>Elo:</strong> {{ cardranking.elo }}</p>
 
-    {% load static %}
-    <img src="{% static 'mtg_compare/images/' %}{{ cardranking.card.name }}.jpg" alt="{{ cardranking.card.name }}" style="width:555px;height:540px;"/>
+    <img src="{{ cardranking.card.image.url }}"/>
 {% endblock %}

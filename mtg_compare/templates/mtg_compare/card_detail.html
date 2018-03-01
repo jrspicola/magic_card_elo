@@ -23,6 +23,6 @@
     <br/>
     <p><strong>Elo:</strong> {{ card.cardranking.elo }}</p>
 
-    {% load static %}
-    <img src="{% static 'mtg_compare/images/' %}{{ card.name }}.jpg" alt="{{ card.name }}" style="width:555px;height:540px;"/>
+    <img src="{{ card.image.url }}"/>
+
 {% endblock %}

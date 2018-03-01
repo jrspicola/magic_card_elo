@@ -27,6 +27,7 @@ class Card(models.Model):
     '''
     name = models.CharField(max_length=200, unique=True)
     cmc = models.IntegerField(default=0, help_text="Enter the converted mana cost of this card")
+    image = models.ImageField(upload_to='card_images', default='card_images/Card_Back.jpg')
 
     cardType = models.ManyToManyField(CardType, help_text="Select a type for this card")
     cardColor = models.ManyToManyField(CardColor, help_text="Select a color for this card")

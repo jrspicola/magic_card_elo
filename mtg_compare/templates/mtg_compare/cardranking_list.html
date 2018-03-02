@@ -4,7 +4,7 @@
     <h1>Card Rankings</h1>
 
     {% if cardranking_list %}
-    <ul>
+    <ol>
 
         {% for cardranking in cardranking_list %}
         <li>
@@ -12,7 +12,7 @@
         </li>
         {% endfor %}
 
-    </ul>
+    </ol>
     {% else %}
         <p>There are no card rankings</p>
     {% endif %}

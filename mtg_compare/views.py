@@ -82,7 +82,6 @@ def CompareCards(request):
 
 class CardRankingListView(generic.ListView):
     model = CardRanking
-    paginate_by = 10
     ordering = ['-elo']
 
 class CardRankingDetailView(generic.DetailView):
@@ -90,7 +89,6 @@ class CardRankingDetailView(generic.DetailView):
 
 class CardListView(generic.ListView):
     model = Card
-    paginate_by = 20
     ordering = ['name']
 
 class CardDetailView(generic.DetailView):

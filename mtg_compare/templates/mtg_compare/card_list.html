@@ -4,7 +4,7 @@
     <h1>Card List</h1>
 
     {% if card_list %}
-    <ul>
+    <ol>
 
         {% for card in card_list %}
         <li>
@@ -12,7 +12,7 @@
         </li>
         {% endfor %}
 
-    </ul>
+    </ol>
     {% else %}
         <p>There are no cards</p>
     {% endif %}

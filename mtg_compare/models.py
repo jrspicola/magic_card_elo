@@ -17,6 +17,7 @@ class CardType(models.Model):
 
 class CardSet(models.Model):
     cardSet = models.CharField(max_length=50, help_text="Enter the name of a set", unique=True)
+    code = models.CharField(max_length=3, help_text="Enter the expansion code", default='AAA')
 
     def __str__(self):
         return self.cardSet

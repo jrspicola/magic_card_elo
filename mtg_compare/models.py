@@ -5,6 +5,7 @@ ELO_DEFAULT = 1400
 
 class CardColor(models.Model):
     cardColor = models.CharField(max_length=20, help_text="Enter a color", unique=True)
+    colorAbrv = models.CharField(max_length=2, help_text="Enter the abbreviation for the color", default='C')
 
     def __str__(self):
         return self.cardColor

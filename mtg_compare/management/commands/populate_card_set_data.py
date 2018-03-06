@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from mtg_compare.models import Card, CardRanking, CardType, CardColor, CardSet
 
 def create_card_set(set_info):
+    print('STARTING SET:')
     print(set_info['name'])
     try:
         s = CardSet.objects.get(cardSet=set_info['name'])
@@ -30,6 +31,8 @@ def create_card(card_info, s):
         #create card
         c = Card(name=card_info['name'], cmc=card_info['cmc'])
         c.save()
+
+        CardRanking(card=c).save()
 
         #add type
         for t in card_info.get('types'):
@@ -66,8 +69,10 @@ class Command(BaseCommand):
             )
 
     def _create_card_sets(self, path):
+        print('LOADING JSON')
         data = json.load(open(path, encoding='utf8'))
-
+        print('JSON LOADED')
+        
         #for each set
         for key in data.keys():
             #create the set

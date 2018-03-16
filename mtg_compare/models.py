@@ -1,5 +1,8 @@
 from django.db import models
 from django.urls import reverse
+import urllib.request
+import os
+from django.core.files import File
 
 ELO_DEFAULT = 1400
 
@@ -29,7 +32,9 @@ class Card(models.Model):
     '''
     name = models.CharField(max_length=200, unique=True)
     cmc = models.IntegerField(default=0, help_text="Enter the converted mana cost of this card")
-    image = models.ImageField(upload_to='card_images', default='card_images/Card_Back.jpg')
+    
+    image = models.ImageField(upload_to='card_images')
+    image_url = models.URLField()
 
     cardType = models.ManyToManyField(CardType, help_text="Select a type for this card")
     cardColor = models.ManyToManyField(CardColor, help_text="Select a color for this card")
@@ -52,6 +57,18 @@ class Card(models.Model):
     def card_color_display(self):
         return ', '.join([ cardColor.cardColor for cardColor in self.cardColor.all()])
     card_color_display.short_description = 'Color'
+
+    def get_remote_image(self):
+        if self.image_url and not self.image:
+            result = urllib.request.urlretrieve(self.image_url)
+            print (result)
+            self.image.save(
+                    os.path.basename(self.image_url),
+                    File(open(result[0], encoding="utf8"))
+                )
+            self.save()
+        else:
+            print("No URL to track")
 
 class CardComparison(models.Model):
     '''

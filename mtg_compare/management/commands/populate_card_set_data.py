@@ -3,6 +3,11 @@ import json
 from django.core.management.base import BaseCommand
 from mtg_compare.models import Card, CardRanking, CardType, CardColor, CardSet
 
+'''
+path to the static files:
+mtg_compare/static/mtg_compare/UST_Set_info.json
+'''
+
 def create_card_set(set_info):
     print('STARTING SET:')
     print(set_info['name'])
